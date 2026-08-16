@@ -5,6 +5,10 @@ pipeline {
         } 
     }
 
+    environment {
+        def appVersion = ""
+    }
+
     options {
         disableConcurrentBuilds()
         timeout(time: 15, unit: 'MINUTES')
@@ -22,16 +26,16 @@ pipeline {
             steps{
                 script{
                     def packageJson = readJson file: 'package.json'
-                    def appVersion = packageJson.version
+                    appVersion = packageJson.version
                     ech0 "The application version is: ${appVersion}"
                 }
             }
         }
-        stage('Build') {
+        stage('Install dependencies') {
             steps {
                 script {
                     sh """
-                        echo "Building"
+                        npm install
                     """
                 } 
             }
