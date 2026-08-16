@@ -7,6 +7,7 @@ pipeline {
 
     environment {
         def appVersion = ""
+
     }
 
     options {
@@ -23,8 +24,8 @@ pipeline {
     // Build
     stages {
         stage('Read version'){
-            steps{
-                script{
+            steps {
+                script {
                     def packageJson = readJson file: 'package.json'
                     appVersion = packageJson.version
                     ech0 "The application version is: ${appVersion}"
