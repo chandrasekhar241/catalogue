@@ -26,21 +26,22 @@ pipeline {
         stage('Read version'){
             steps {
                 script {
-                    def packageJson = readJson file: 'package.json'
+                    def packageJson = readJSON file: 'package.json'
+                    // Extract the version property
                     appVersion = packageJson.version
-                    ech0 "The application version is: ${appVersion}"
+                    echo "The application version is: ${appVersion}"
                 }
             }
         }
-        stage('Install dependencies') {
-            steps {
-                script {
-                    sh """
-                        npm install
-                    """
-                } 
-            }
-        }
+        // stage('Install dependencies') {
+        //     steps {
+        //         script {
+        //             sh """
+        //                 npm install
+        //             """
+        //         } 
+        //     }
+        // }
         stage('Test') {
             steps {
                 script {
