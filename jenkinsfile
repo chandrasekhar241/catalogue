@@ -56,6 +56,20 @@ pipeline {
                 }
             }
         }
+        stage('SonarQube Quality Gate') {
+            steps {
+        // Use a timeout to prevent the pipeline from hanging indefinitely if the webhook fails
+                timeout(time: 10, unit: 'MINUTES') {
+            // Jenkins pauses here and waits for the SonarQube webhook payload
+                    script {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
+                    }
+                }
+            }
+        }
 
 
         stage('Docker Build') {
