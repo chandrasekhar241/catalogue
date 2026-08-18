@@ -45,6 +45,19 @@ pipeline {
                 } 
             }
         }
+
+         stage('SonarQube Analysis') {
+            steps {
+                // 'SonarQube' must match the installation name in Manage Jenkins -> System
+                withSonarQubeEnv('sonar-server') { 
+                    sh "${tool, 'sonar-8'}/bin/sonar-scanner"
+                        
+                    
+                }
+            }
+        }
+
+
         stage('Docker Build') {
             steps {
                 script{
